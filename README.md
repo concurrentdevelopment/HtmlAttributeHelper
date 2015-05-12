@@ -10,13 +10,16 @@ If you have a model like so:
     {
         [AdditionalMetadata("title", "This is the title")]
         [AdditionalMetadata("data-autocomplete-url", "/Api/Autocomplete/Name")]
+        [AdditionalMetadata("placeholder", "Edit me...")]
         public string Name { get; set; }
     
         [AdditionalMetadata("class", "big-text")]
         public string Description { get; set; }
     
         [AdditionalMetadata("class", "grey")]
-        public string AnotherField { get; set; }
+        public string MergeClasses { get; set; }
+        
+        public string NoMetadata { get; set; }
     }
     
 Then if you create an editor template called String.cshtml in ./Views/Shared/EditorTemplates like so:
@@ -33,10 +36,13 @@ Then putting this in a view
     
     @Html.EditorFor(m => m.Description)
     
-    @Html.EditorFor(m => m.AnotherField, new { @class = "black" })
+    @Html.EditorFor(m => m.MergeClasses, new { @class = "black" })
+    
+    @Html.EditorFor(m => m.NoMetadata, new { placeholder = "Write something..." })
 
 will render something like this:
 
-    <input type="text" id="Name" name="Name" title="This is the title" data-autocomplete-url="/Api/Autocomplete/Name" />
+    <input type="text" id="Name" name="Name" title="This is the title" data-autocomplete-url="/Api/Autocomplete/Name" placeholder="Edit me..." />
     <input type="text" id="Description" name="Description" class="big-text" />
-    <input type="text" id="AnotherField" name="AnotherField" class="black grey" />
+    <input type="text" id="MergeClasses" name="MergeClasses" class="black grey" />
+    <input type="text" id="NoMetadata" name="NoMetadata" placeholder="Write something..." />
